@@ -23,38 +23,7 @@ upper = max(negAmps)
 for i in range(len(negAmps)):
     negAmps[i] += abs(lower)
 
-
-
 print(negAmps)
-#
-# big = max(amps)
-# small = min(amps)
-# print(amps)
-#
-# amps2 = []
-#
-# for i in range(len(amps)):
-#     scaledNum = amps[i] * math.pow(10, ((amps[i]-small)/10))
-#     amps2.append(scaledNum)
-#
-# big = max(amps2)
-# small = min(amps2)
-# amps3 = []
-#
-# print("max: ", big)
-# print("min, ", small)
-#
-# for i in range(len(amps2)):
-#     val = (amps2[i]-small) / (big-small)
-#     flip = 1-val #Values were negative but switched to positive, so now we need to flip the ordering of the scale
-#     amps3.append(flip)
-#     print("%.3f" % val)
-#
-#
-# print("----printing equations------")
-#
-# for i in range(len(amps3)):
-#     print("y = %.3fsin(%.3fπt)" % (amps3[i], frequencies[i]))
 
 
 big = max(negAmps)
@@ -83,7 +52,8 @@ print("----printing equations------")
 
 file = open("SoundEquations.txt", "w")
 # iterEq = ("y = {a:.3f}sin({b:.3f}pit)\n".format(a=amps3[i], b=frequencies[i]) for i in range(len(amps3)))
-iterEq = ("{a:.4f}sin({b:.4f}t) + ".format(a=amps3[i], b=frequencies[i]*math.pi) for i in range(len(amps3)) if abs(round(amps3[i], 2)) > 0.1)
+#Here, we only need to multiply by pi because the frequencies were already multiplied by 2 in the first while loop
+iterEq = ("{a:.4f}sin({b:.4f}t) + ".format(a=amps3[i], b=frequencies[i]*math.pi) for i in range(len(amps3)) if abs(round(amps3[i], 3)) > 0.000)
 endEq = ("0" for i in [0])
 fullEq = (i for i in itertools.chain(iterEq, endEq))
 file.writelines(fullEq)
